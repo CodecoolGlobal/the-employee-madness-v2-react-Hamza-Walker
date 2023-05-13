@@ -6,6 +6,19 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const [positionFilter, setPositionFilter] = useState("");
   const [levelFilter, setLevelFilter] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
+  console.log(employees);
+  const [sorting , setSorting] = useState({ criteria : 'firstName', order : 'asc' });
+  
+  const hadleSortingClick = (criteria) => {
+    if (criteria === sorting.criteria) {
+      setSorting({ ...sorting, order: sorting.order === 'asc' ? 'desc' : 'asc' });
+    } else {
+      setSorting({ criteria, order: 'asc' });
+    }
+  };
+
+  
+
 
   // Filter employees based on the selected position and level options
   const filteredEmployees = employees.filter((employee) => {
@@ -13,6 +26,21 @@ const EmployeeTable = ({ employees, onDelete }) => {
     const levelMatch = levelFilter ? employee.level === levelFilter : true;
     const searchMatch = searchFilter ? employee.name.toLowerCase().includes(searchFilter.toLowerCase()) : true;
     return positionMatch && levelMatch && searchMatch;
+  });
+  console.log(filteredEmployees);
+  const sortedEmployees = filteredEmployees.sort((a, b) => {
+    const order = sorting.order === 'asc' ? 1 : -1;
+  
+    if (sorting.criteria === 'firstName') {
+      return order * a.firstName.localeCompare(b.firstName)
+    } else if (sorting.criteria === 'lastName') {
+      return order * a.lastName.localeCompare(b.lastName)
+    } else if (sorting.criteria === 'position') {
+      return order * a.position.localeCompare(b.position)
+    } else if (sorting.criteria === 'level') {
+      return order * (a.level - b.level)
+    }
+    return 0;
   });
 
   // Get unique values for Position and Level dropdown menus
@@ -52,18 +80,20 @@ const EmployeeTable = ({ employees, onDelete }) => {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Level</th>
-            <th>Position</th>
+            <th onClick={() => hadleSortingClick('firstName')}>First Name {sorting.criteria === 'firstName' && (sorting.order === 'asc' ? '⬆️' : '⬇️')}</th>
+            <th onClick={() => hadleSortingClick('lastName')}>Last Name {sorting.criteria === 'lastName' && (sorting.order === 'asc' ? '⬆️' : '⬇️')}</th>
+            <th onClick={() => hadleSortingClick('position')}>Position {sorting.criteria === 'position' && (sorting.order === 'asc' ? '⬆️' : '⬇️')}</th>
+            <th onClick={() => hadleSortingClick('level')}>Level {sorting.criteria === 'level' && (sorting.order === 'asc' ? '⬆️' : '⬇️')}</th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {filteredEmployees.map((employee) => (
+          {sortedEmployees.map((employee) => (
             <tr key={employee._id}>
-              <td>{employee.name}</td>
-              <td>{employee.level}</td>
+              <td>{employee.firstName}</td>
+              <td>{employee.lastName}</td>
               <td>{employee.position}</td>
+              <td>{employee.level}</td>
               <td>
                 <Link to={`/update/${employee._id}`}>
                   <button type="button">Update</button>
@@ -79,5 +109,6 @@ const EmployeeTable = ({ employees, onDelete }) => {
     </div>
   );
 };
+
 
 export default EmployeeTable;
