@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "../Components/Loading";
 import EmployeeTable from "../Components/EmployeeTable";
+import EmployeeSearchPage from "./EmployeeSearchPage";
 
 const fetchEmployees = () => {
   return fetch("/api/employees").then((res) => res.json());
@@ -36,7 +37,12 @@ const EmployeeList = () => {
     return <Loading />;
   }
 
-  return <EmployeeTable employees={employees} onDelete={handleDelete} />;
+  return (
+    <>
+    <EmployeeTable employees={employees} onDelete={handleDelete} />
+    <EmployeeSearchPage employees={employees} />
+    </>
+  ) ;
 };
 
 export default EmployeeList;

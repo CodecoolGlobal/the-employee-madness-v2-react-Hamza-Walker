@@ -13,6 +13,11 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <th>Position</th>
             <th>Level</th>
             <th>Actions</th>
+            <th>
+            <Link to={`/search`}>
+                  <button type="button">Search</button>
+                </Link>
+            </th>
           </tr>
         </thead>
         <tbody>
