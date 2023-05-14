@@ -1,14 +1,38 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./EmployeeTable.css";
+import EquipmentTable from "../Equipment/EquipmentTable";
+import { useNavigate } from "react-router-dom";
+
 
 const EmployeeTable = ({ employees, onDelete }) => {
+  const navigate = useNavigate();
+
   const [positionFilter, setPositionFilter] = useState("");
   const [levelFilter, setLevelFilter] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
-  console.log(employees);
   const [sorting , setSorting] = useState({ criteria : 'firstName', order : 'asc' });
+  const [equipments, setEquipments] = useState([
+    { id: 1, name: 'Laptop', type: 'Electronic', amount: 10 },
+    { id: 2, name: 'Desk', type: 'Furniture', amount: 5 },
+    { id: 3, name: 'Chair', type: 'Furniture', amount: 20 },
+  ]);
   
+  const updateEquipment = (updatedEquipment) => {
+    const updatedEquipments = equipments.map((equipment) => {
+      if (equipment.id === updatedEquipment.id) {
+        return updatedEquipment;
+      }
+      return equipment;
+    });
+    setEquipments(updatedEquipments);
+  };
+
+  const deleteEquipment = (id) => {
+    const updatedEquipments = equipments.filter((equipment) => equipment.id !== id);
+    setEquipments(updatedEquipments);
+  };
+
   const hadleSortingClick = (criteria) => {
     if (criteria === sorting.criteria) {
       setSorting({ ...sorting, order: sorting.order === 'asc' ? 'desc' : 'asc' });
@@ -17,6 +41,11 @@ const EmployeeTable = ({ employees, onDelete }) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/employees/${searchFilter}`);
+    }
+  };
   
 
 
@@ -24,10 +53,11 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const filteredEmployees = employees.filter((employee) => {
     const positionMatch = positionFilter ? employee.position === positionFilter : true;
     const levelMatch = levelFilter ? employee.level === levelFilter : true;
-    const searchMatch = searchFilter ? employee.name.toLowerCase().includes(searchFilter.toLowerCase()) : true;
+    const searchMatch = searchFilter
+    ? `${employee.firstName} ${employee.lastName}`.toLowerCase().includes(searchFilter.toLowerCase())
+    : true;
     return positionMatch && levelMatch && searchMatch;
   });
-  console.log(filteredEmployees);
   const sortedEmployees = filteredEmployees.sort((a, b) => {
     const order = sorting.order === 'asc' ? 1 : -1;
   
@@ -74,7 +104,16 @@ const EmployeeTable = ({ employees, onDelete }) => {
         </label>
         <label>
           Search:
-          <input type="text" value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)} />
+          <input
+            type="text" 
+            value={searchFilter}
+            onChange={(e) => {
+              setSearchFilter(e.target.value)
+              console.log(searchFilter)
+            }
+            } 
+            onKeyDown={handleKeyDown}
+            placeholder="Search employees" />
         </label>
       </div>
       <table>
@@ -106,6 +145,9 @@ const EmployeeTable = ({ employees, onDelete }) => {
           ))}
         </tbody>
       </table>
+      <div className="equipment-table">
+      <EquipmentTable equipments={equipments} onUpdate={updateEquipment} onDelete={deleteEquipment} />
+      </div>
     </div>
   );
 };
