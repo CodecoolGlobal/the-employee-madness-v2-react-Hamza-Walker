@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/update/:id",
         element: <EmployeeUpdater />,
-      },
+      },  
       {
         path: "/table-test",
         element: <TableTest />,
@@ -39,10 +39,7 @@ const router = createBrowserRouter([
         path: "/form-test",
         element: <FormTest />,
       },
-      {
-        path: '/employees/:search.',
-        element : <DisplaySearch />,
-      }
+      
     ],
   },
 ]);
