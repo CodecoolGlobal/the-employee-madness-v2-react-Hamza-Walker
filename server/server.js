@@ -13,6 +13,14 @@ if (!MONGO_URL) {
 const app = express();
 app.use(express.json());
 
+app.get('/employees/:search', async (req, res) => {
+  const employeeName = req.params.search.split(' ');
+  const firstName = employeeName[0];
+  const searchResult = await EmployeeModel.find({ firstName: firstName });
+  res.json(searchResult);
+});
+
+
 app.get("/api/employees/", async (req, res) => {
   const employees = await EmployeeModel.find().sort({ created: "desc" });
   return res.json(employees);
@@ -47,6 +55,19 @@ app.patch("/api/employees/:id", async (req, res, next) => {
   }
 });
 
+app.put("/api/employees/:id", async (req, res, next) => {
+  try {
+    const employee = await EmployeeModel.findByIdAndUpdate(
+      req.params.id,
+      { height: req.body.height },
+      { new: true }
+    );
+
+    return res.json({ success: true, message: "Employee height updated successfully" });
+  } catch (err) {
+    return next(err);
+  }
+});
 app.delete("/api/employees/:id", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findById(req.params.id);
