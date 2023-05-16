@@ -11,6 +11,7 @@ import EmployeeUpdater from "./Pages/EmployeeUpdater";
 import "./index.css";
 import TableTest from "./Pages/TableTest";
 import FormTest from "./Pages/FormTest";
+import SearchEmployeePage from "./Pages/SearchEmployeePage"; // Import the newly created page component
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         path: "/form-test",
         element: <FormTest />,
       },
+      {
+        path: "/search",
+        element: <SearchEmployeePage />, // Add the route for the search page
+      },
     ],
   },
 ]);
@@ -49,7 +54,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

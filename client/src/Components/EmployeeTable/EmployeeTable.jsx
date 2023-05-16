@@ -12,7 +12,6 @@ const EmployeeTable = ({ employees, onDelete }) => {
             <th>Last Name</th>
             <th>Position</th>
             <th>Level</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
