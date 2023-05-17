@@ -1,6 +1,6 @@
 // https://mongoosejs.com/
 const mongoose = require("mongoose");
-
+const {ObjectId} = mongoose.Schema
 const { Schema } = mongoose;
 const EmployeeSchema = new Schema({
   firstName: {
@@ -29,8 +29,9 @@ const EmployeeSchema = new Schema({
   height: {
     type: Number,
   },
-  hobbies: [{ type: Schema.Types.ObjectId, ref: 'Hobbie' }],
-
+  hobbies: {
+    type: Array,
+  }
 });
 
 

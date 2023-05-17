@@ -11,7 +11,6 @@ const descriptionhobbie = require("./descriptionhobbie.json");
 const EmployeeModel = require("../db/employee.model");
 const HobbieModel = require("../db/hobbie.model");
 
-
 const mongoUrl = process.env.MONGO_URL;
 
 if (!mongoUrl) {
@@ -22,7 +21,7 @@ if (!mongoUrl) {
 const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 
 const populateEmployees = async () => {
-  const allHobbies = await HobbieModel.find(); // this to get all hobbies frrom the database
+  const allHobbies = await HobbieModel.find(); // this to get all hobbies from the database
 
   await EmployeeModel.deleteMany({});
 
@@ -34,7 +33,8 @@ const populateEmployees = async () => {
       lastName: nameParts[1],
       level: pick(levels),
       position: pick(positions),
-      hobbies: [randomHobby._id],     // this to get the id of the random hobby .id if you just wand the id .description etc if you want the description
+      hobbies: randomHobby,
+      // this to get the id of the random hobby .id if you just want the id .description etc if you want the description
     };
   });
 
@@ -56,14 +56,20 @@ const populateHobbies = async () => {
   console.log("Hobbies created");
 };
 
-
-
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
   await populateEmployees();
-  await populateHobbies(); //// change here 
-  await mongoose.disconnect();
+  await populateHobbies();
+
+   // Find all employees and populate their hobbies with name and description
+//    const employees = await EmployeeModel.find()
+//     .populate("hobbies")
+//     .exec();
+
+//  console.log("Employees populated with hobbies:", employees);
+//   await mongoose.disconnect();
+await mongoose.disconnect();
 };
 
 main().catch((error) => {

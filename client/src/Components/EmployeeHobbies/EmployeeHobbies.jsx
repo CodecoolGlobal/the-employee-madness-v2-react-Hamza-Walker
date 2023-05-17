@@ -24,7 +24,6 @@ const EmployeeHobbies = ({employees}) => {
                         {employee.hobbies.map((hobby, index) => (
                         <div key={index}>
                             <span>{hobby.name}</span>
-                            <span>{hobby.description}</span>
                         </div>
                         ))}
                     </td>
@@ -32,17 +31,6 @@ const EmployeeHobbies = ({employees}) => {
                 ))}
                 </tbody>
         </table>
-        <div>
-            {employees.map(employee => (
-                <div key={employee._id}>
-                    <h3>    
-                        {employee.hobbies.map((hobby, index) => (
-                            <span key={index}>{hobby.name}</span>
-                        ))}
-                    </h3> 
-                 </div>
-            ))}
-        </div>
     </div>
   )
 }

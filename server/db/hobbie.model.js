@@ -1,9 +1,8 @@
-// https://mongoosejs.com/
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const HobbiesSchema = new Schema({
+const HobbieSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,6 +12,4 @@ const HobbiesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Hobbie", HobbiesSchema);
-
-
+module.exports = mongoose.model("Hobbie", HobbieSchema);
