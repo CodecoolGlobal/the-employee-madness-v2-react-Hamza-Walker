@@ -16,7 +16,12 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().populate("hobbies")//.sort({ created: "desc" })
+  // const populatedEmployees = await employees.map(
+  //   (employee) => employee.populate("hobbies")
+  // );
+    //.populate('hobbies');
+  // console.log(populatedEmployees);
   return res.json(employees);
 });
 

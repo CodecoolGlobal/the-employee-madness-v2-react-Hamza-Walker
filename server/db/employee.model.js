@@ -1,7 +1,6 @@
-// https://mongoosejs.com/
 const mongoose = require("mongoose");
-const {ObjectId} = mongoose.Schema
 const { Schema } = mongoose;
+
 const EmployeeSchema = new Schema({
   firstName: {
     type: String,
@@ -26,15 +25,12 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  height: {
-    type: Number,
-  },
-  hobbies: {
-    type: Array,
-  }
+  hobbies: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Hobbie',
+    },
+  
 });
 
-
 module.exports = mongoose.model("Employee", EmployeeSchema);
-
-

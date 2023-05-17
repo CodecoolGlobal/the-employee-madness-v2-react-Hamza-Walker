@@ -33,12 +33,13 @@ const populateEmployees = async () => {
       lastName: nameParts[1],
       level: pick(levels),
       position: pick(positions),
-      hobbies: randomHobby,
-      // this to get the id of the random hobby .id if you just want the id .description etc if you want the description
+      hobbies: randomHobby._id, // Only include the ID of the hobby
     };
-  });
 
-  await EmployeeModel.create(...employees);
+  });
+  // console.log("Employees created");
+  console.log(await EmployeeModel.create(...employees));
+
   console.log("Employees created");
 };
 
@@ -58,17 +59,12 @@ const populateHobbies = async () => {
 
 const main = async () => {
   await mongoose.connect(mongoUrl);
-
-  await populateEmployees();
   await populateHobbies();
-
-   // Find all employees and populate their hobbies with name and description
-//    const employees = await EmployeeModel.find()
-//     .populate("hobbies")
-//     .exec();
+  await populateEmployees();
+  
+  
 
 //  console.log("Employees populated with hobbies:", employees);
-//   await mongoose.disconnect();
 await mongoose.disconnect();
 };
 
