@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-
 const EmployeeSchema = new Schema({
   firstName: {
     type: String,
@@ -27,7 +26,13 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  height: {
+    type: Number,
+  },
+  hobbies: [{ type: Schema.Types.ObjectId, ref: 'Hobbie' }],
+
 });
+
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
 

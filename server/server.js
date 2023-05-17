@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
+const HobbieModel = require("./db/hobbie.model");
+
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -33,6 +35,16 @@ app.post("/api/employees/", async (req, res, next) => {
     return next(err);
   }
 });
+
+app.get("/api/hobbies/", async (req, res) => {
+  const employees = await EmployeeModel.find().populate('hobbies').sort({ created: "desc" });
+  console.log("fetch successful");
+  return res.json(employees);
+});
+// By adding .populate('hobbies') to the EmployeeModel.find() query, 
+// you instruct Mongoose to populate the hobbies field with the actual 
+// Hobbie objects instead of just returning the object IDs.
+
 
 app.patch("/api/employees/:id", async (req, res, next) => {
   try {
