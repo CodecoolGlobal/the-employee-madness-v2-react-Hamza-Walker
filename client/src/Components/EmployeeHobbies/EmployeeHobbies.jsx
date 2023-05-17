@@ -1,6 +1,7 @@
-import React from 'react'
+import React,{useState} from 'react'
 
 const EmployeeHobbies = ({employees}) => {
+    const [input, setInput] = useState('')
   return (
     <div>
         <table>
@@ -20,6 +21,13 @@ const EmployeeHobbies = ({employees}) => {
                     <td>{employee.lastName}</td>
                     <td>{employee.position}</td>
                     <td>{employee.level}</td>
+                    <input type='text'
+                    key={employee._id}
+                    value={employee.hobbies}
+                    onChange={(e) =>{
+                        setInput(e.target.value)}
+                    } 
+                    />
                     <td>
                         {employee.hobbies.map((hobby, index) => (
                         <div key={index}>

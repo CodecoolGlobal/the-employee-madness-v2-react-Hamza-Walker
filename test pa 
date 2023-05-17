@@ -1,0 +1,5 @@
+Add DB model Hobby with fields "name" and "description"
+Populate DB with some hobbies
+Extend Employee model with field "hobbies", should be array of references to Hobby objects
+Create a new page where we can add new hobbies
+Update Employee form to select hobbies from the list of existing hobbies
