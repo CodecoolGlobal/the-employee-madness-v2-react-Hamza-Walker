@@ -1,26 +1,16 @@
-### Task 1: Update the employee document's "level" field to accept a number instead of a string.
+### **Task #1 (Previous Company) Previous Company Requirements**
 
-- Modify the employee document structure to include a "level" field that accepts a number representing the order and code for a level.
-- Update the levels as follows:
+1. **Extend the storage/data model** with a **Company object** (the minimum information that needs to be stored about a company is its name as a string), e.g. each Employee can have only one company associated with it (where the employee worked at previously).
+[X]
 
-{ "Junior": 1, "Medior": 2, "Senior": 3, "Expert": 4, "Godlike": 5 }
+2. **Creating a new company** should be possible from the frontend (only creating such objects is enough, no need for a List of companies) - you can pre-create a few companies as an example via mongosh or MongoDB Compass.
+[X]
 
-### Task 2: Update the populate.js file to generate number-based levels instead of strings.
+3. Have a link **Create Company** on the navbar to access this page/feature.
+[X]
 
-- Modify the populate.js file to generate number-based levels when creating employee records.
-- Update the logic in the file to assign the appropriate number to the "level" field based on the desired level code.
+4. When **editing an employee** allow users to **select from the existing list of companies** where the employee previously worked at.
+[X]
 
-### Task 3: Extend the EmployeesList with a sort feature by level.
-
-- Add a sort feature to the EmployeesList component in the frontend.
-- Implement the ability to sort employees by their level in ascending and descending order.
-- Update the UI to display the sorting options and reflect the chosen sorting order.
-
-### Task 4: Extend the EmployeesList with a level filter feature.
-
-- Enhance the EmployeesList component in the frontend to include a filter feature.
-- Implement a mechanism to filter employees based on a selected level.
-- Update the UI to include a level selection dropdown or input field for filtering.
-- Display only the employees that match the selected level and update the list accordingly.
-
-Please note that editing and creating employees with the new number-based level field are not part of this task and can be ignored for now.
+5. Make sure this extra information can be **saved/persisted** - no need to be able to "delete" (disassociate) employees and companies.
+[] did not manage this last one
