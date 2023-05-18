@@ -9,7 +9,7 @@ const EmployeeSchema = new Schema({
     required: true,
   },
   level: {
-    type: String,
+    type: Object,
     required: true,
   },
   position: {

@@ -7,7 +7,6 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
-
 const mongoUrl = process.env.MONGO_URL;
 
 if (!mongoUrl) {
@@ -28,9 +27,12 @@ const populateEmployees = async () => {
     };
   });
 
+  console.log(employees);
+
   await EmployeeModel.create(...employees);
   console.log("Employees created");
 };
+
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
