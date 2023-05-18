@@ -21,10 +21,8 @@ const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
 
   const employees = names.map((name) => {
-    const nameParts = name.split(" ");
     return {
-      firstName: nameParts[0],
-      lastName: nameParts[1],
+      name: pick(names),
       level: pick(levels),
       position: pick(positions),
     };
