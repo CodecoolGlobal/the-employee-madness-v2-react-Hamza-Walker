@@ -18,23 +18,23 @@ const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
-  
+
   const employees = names.map((name) => {
-    const nameParts = name.split(" ");
     const levelName = pick(levels);
     const levelNum = levels.indexOf(levelName) + 1;
     return {
-      firstName: nameParts[0],
-      lastName: nameParts[1],
-      level:{ level:levelName , order: levelNum },
+      name: name,
+      level: { level: levelName, order: levelNum },
       position: pick(positions),
     };
   });
-  console.log(employees)
+
+  console.log(employees);
 
   await EmployeeModel.create(...employees);
   console.log("Employees created");
 };
+
 const main = async () => {
   await mongoose.connect(mongoUrl);
 

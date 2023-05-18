@@ -4,14 +4,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const EmployeeSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  middleName: {
-    type: String,
-  },
-  lastName: {
+  name: {
     type: String,
     required: true,
   },
