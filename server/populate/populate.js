@@ -7,6 +7,7 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
+const experience = require("./experience.json");
 const mongoUrl = process.env.MONGO_URL;
 
 if (!mongoUrl) {
@@ -24,6 +25,7 @@ const populateEmployees = async () => {
       name: pick(names),
       level: pick(levels),
       position: pick(positions),
+      experience: pick(experience)
     };
   });
 
