@@ -36,13 +36,12 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         />
       </div>
       <div>
-        <label htmlFor="suoervisor">Supervisor:</label>
-        <select name="supervisor" id="supervisor">
-          <option value="supervisor1">Supervisor 1</option>
-          <option value="supervisor2">Supervisor 2</option>
-          <option value="supervisor3">Supervisor 3</option>
-        </select>
-      </div>
+  <label htmlFor="supervisor">Supervisor:</label>
+  <select name="supervisor" id="supervisor" value={employee.supervisor.name}>
+    <option value="">Select Supervisor</option>
+    <option value={employee.supervisor.name}>{employee.supervisor.name}</option>
+  </select>
+</div>
 
       <div className="control">
         <label htmlFor="level">Level:</label>
