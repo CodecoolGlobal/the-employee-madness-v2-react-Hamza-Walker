@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
+const SupervisorModel = require("./db/supervisor.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -14,13 +15,21 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate("supervisor");;
   return res.json(employees);
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id);
+  const employee = await EmployeeModel.findById(req.params.id)
+  console.log("supervisor created!")
+  console.log(employee)
   return res.json(employee);
+});
+
+app.post('/api/supervisors', async (req, res) => {
+  console.log(req.body)
+  const supervisor = await SupervisorModel.create(req.body);
+  return res.json(supervisor);
 });
 
 app.post("/api/employees/", async (req, res, next) => {
