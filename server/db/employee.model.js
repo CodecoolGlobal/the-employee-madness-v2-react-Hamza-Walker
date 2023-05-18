@@ -27,6 +27,10 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  previousCompnay: {
+    type: Schema.Types.ObjectId,
+    ref: "Company",
+  },
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
