@@ -7,7 +7,6 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
-
 const mongoUrl = process.env.MONGO_URL;
 
 if (!mongoUrl) {
@@ -19,16 +18,19 @@ const pick = (from) => from[Math.floor(Math.random() * (from.length - 0))];
 
 const populateEmployees = async () => {
   await EmployeeModel.deleteMany({});
-
+  
   const employees = names.map((name) => {
     const nameParts = name.split(" ");
+    const levelName = pick(levels);
+    const levelNum = levels.indexOf(levelName) + 1;
     return {
       firstName: nameParts[0],
       lastName: nameParts[1],
-      level: pick(levels),
+      level:{ level:levelName , order: levelNum },
       position: pick(positions),
     };
   });
+  console.log(employees)
 
   await EmployeeModel.create(...employees);
   console.log("Employees created");
