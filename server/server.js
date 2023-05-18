@@ -34,6 +34,16 @@ app.post("/api/employees/", async (req, res, next) => {
     return next(err);
   }
 });
+app.post("/api/previousCompany", async (req, res, next) => {
+  const company = req.body;
+  try {
+    const saved = await CompanyModel.create(company);
+    console.log(saved);
+    return res.json(saved);
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.patch("/api/employees/:id", async (req, res, next) => {
   try {
