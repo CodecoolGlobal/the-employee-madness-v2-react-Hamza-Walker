@@ -43,13 +43,12 @@ app.patch('/api/employees/:id', async (req, res) => {
     const { title, content } = req.body.notes;
 
     // Create a new note using the Note model
-    const newNote = await NoteModel.create({ title, content });
+       const newNote = await NoteModel.create({ title, content });
 
-    // Update the employee's notes reference with the new note
     const updatedEmployee = await EmployeeModel.findByIdAndUpdate(
       employeeId,
-      { $push: { notes: newNote._id } },
-      { new: true }
+    { $push: { notes: newNote._id } }, 
+     { new: true }
     );
 
     res.json(updatedEmployee);
@@ -58,7 +57,6 @@ app.patch('/api/employees/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update employee notes' });
   }
 });
-
 
 
 
