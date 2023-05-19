@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <FormTest />,
       },
       {
-        path: "/workLog",
+        path: "/workLog/:id",  // dont forget to include the /:id trouble shooting this was a pain in the ass 
         element: <WorkLogForm />,
       },
     ],

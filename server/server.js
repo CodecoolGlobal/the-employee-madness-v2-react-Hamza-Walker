@@ -21,7 +21,7 @@ app.get("/api/employees/", async (req, res) => {
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id);
+  const employee = await EmployeeModel.findById(req.params.id).populate("workLog");
   return res.json(employee);
 });
 
