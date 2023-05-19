@@ -20,6 +20,12 @@ const EmployeeSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  workLog: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "WorkLog",
+    },
+  ]
 });
 
 module.exports = mongoose.model("Employee", EmployeeSchema);
