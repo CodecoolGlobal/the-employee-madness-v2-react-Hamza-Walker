@@ -27,6 +27,9 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 <button type="button" onClick={() => onDelete(employee._id)}>
                   Delete
                 </button>
+                <Link to={`/notes/${employee._id}`}>
+                <button type="button" onClick ={ console.log("ADD a route in the index Page")} > Notes</button>
+                </Link>
               </td>
             </tr>
           ))}

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-
+import EmployeeNotes from "./Pages/EmployeeNotes";
 import Layout from "./Pages/Layout";
 import ErrorPage from "./Pages/ErrorPage";
 import EmployeeList from "./Pages/EmployeeList";
@@ -37,6 +37,9 @@ const router = createBrowserRouter([
       {
         path: "/form-test",
         element: <FormTest />,
+      },{
+        path: "/notes/:id",
+        element: <EmployeeNotes />,
       },
     ],
   },
