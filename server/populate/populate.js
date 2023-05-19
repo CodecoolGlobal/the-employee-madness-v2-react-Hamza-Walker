@@ -44,7 +44,7 @@ const populateEmployees = async () => {
     };
   });
 
-  // console.log(employees);
+  console.log(employees);
 
   await EmployeeModel.create(...employees);
   console.log("Employees created");

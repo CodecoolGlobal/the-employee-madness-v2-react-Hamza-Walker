@@ -58,12 +58,12 @@ const EmployeeNotes = () => {
             </tr>
           </thead>
           <tbody>
-            {employee.notes && (
-              <tr>
-                <td>{employee.notes.title}</td>
-                <td>{employee.notes.content}</td>
+            {employee.notes && employee.notes.map((note) => (
+              <tr key={note._id}>
+                <td>{note.title}</td>
+                <td>{note.content}</td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
         <input
@@ -78,6 +78,8 @@ const EmployeeNotes = () => {
       </div>
     </div>
   );
+  
+  
 };
 
 export default EmployeeNotes;
