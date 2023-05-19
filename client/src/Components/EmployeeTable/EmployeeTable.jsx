@@ -5,6 +5,9 @@ import "./EmployeeTable.css";
 const EmployeeTable = ({ employees, onDelete }) => {
   return (
     <div className="EmployeeTable">
+      <Link to={"/positions"}>
+                  <button type="button">Update Postion</button>
+                </Link>
       <table>
         <thead>
           <tr>
@@ -27,6 +30,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 <button type="button" onClick={() => onDelete(employee._id)}>
                   Delete
                 </button>
+                
               </td>
             </tr>
           ))}
