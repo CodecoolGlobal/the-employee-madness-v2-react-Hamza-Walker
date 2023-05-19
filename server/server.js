@@ -35,6 +35,44 @@ app.post("/api/employees/", async (req, res, next) => {
     return next(err);
   }
 });
+app.patch("/api/workLog/update/:id", async (req, res, next) => {
+  try {
+    const workLog = await WorkLogModel.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+
+    const employee = await EmployeeModel.findById(req.params.id).populate("workLog");
+    return res.json(employee);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.patch("/api/employees/:id/workLog", async (req, res, next) => {
+  try {
+    const employeeId = req.params.id;
+    const { task, hours } = req.body;
+
+    // Create a new work log document
+    const workLog = await WorkLogModel.create({ task, hours });
+
+    // Find the employee by ID and populate the "workLog" field
+    const employee = await EmployeeModel.findById(employeeId).populate("workLog");
+    employee.workLog = [...employee.workLog, workLog];
+
+    // Save the updated employee document
+    await employee.save();
+
+    // Return the updated employee document as the response
+    return res.json(employee);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
 
 app.patch("/api/employees/:id", async (req, res, next) => {
   try {
