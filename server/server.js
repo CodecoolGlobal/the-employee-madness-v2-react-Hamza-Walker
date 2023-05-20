@@ -23,13 +23,15 @@ app.get("/api/employees/:id", async (req, res) => {
   return res.json(employee);
 });
 
-app.put("/api/employees/:id", async (req, res, next) => {
+
+app.put('/api/employees/:id', async (req, res, next) => {
   try {
-    const employee = await EmployeeModel.findByIdAndUpdate(req.params.id,
-      { height : req.body.height}, 
-      {new :true}
+    const employee = await EmployeeModel.findByIdAndUpdate(
+      req.params.id, 
+      { height : req.body.height} , 
+      {new:"true"}
       )
-      return res.json({ success: true, message: "Employee height updated successfully" });
+      return res.json({ success: true, message: "employee height updated successfully!"})
   }catch (error){
     return next(err)
   }

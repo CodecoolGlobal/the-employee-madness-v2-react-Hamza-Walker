@@ -18,24 +18,21 @@ const EmployeeList = () => {
   const [filterHeight, setFilterHeight] = useState(""); // New state for the filter height
 
 
-  useEffect(() => {
+  useEffect (() => {
     fetchEmployees()
-      .then((employees) => {
-        setLoading(false);
-        if (filterHeight) {
-          const filteredEmployees = employees.filter(
-            (employee) => employee.height > filterHeight
-          );
-          setEmployees(filteredEmployees);
-        } else {
-          setEmployees(employees);
+    .then((employees) => {
+      setLoading(false)
+      if (filterHeight) {
+        const filteredEmployees = employees.filter( (employee) => employee.height > filterHeight )
+        setEmployees(filteredEmployees)
+      } else {
+        setEmployees(employees)
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching employees:", error);
-      });
-  }, [filterHeight]);
-  
+    })
+    .catch(error => {
+      console.error( 'error fetching employees', error)
+    })
+},[filterHeight])
   
   const handleDelete = (id) => {
     deleteEmployee(id);
@@ -45,42 +42,60 @@ const EmployeeList = () => {
     });
   };
 
-  useEffect(() => {
-    fetchEmployees()
-      .then((employees) => {
-        setLoading(false);
-        setEmployees(employees);
-      })
-  }, []);
 
   if (loading) {
     return <Loading />;
   }
+  // const updateEmployee = (id,height) => {
+  //   return fetch (`/api/employees/${id}`, {
+  //     method : "PUT", 
+  //     headers : { "Content-type" : "application/json"},
+  //     body : JSON.stringify(height),
+  //   }).then(res => res.json())
+  // }
 
-  const updateEmployee = (id,height) => {
-    return fetch (`/api/employees/${id}`, {
-      method : "PUT", 
-      headers : { "Content-type" : "application/json"},
-      body : JSON.stringify(height),
-    }).then(res => res.json())
+  // const handleRandomizedHeight = () => {
+  //   const updatedEmployees = employees.map(employee => {
+  //     const randomHeight = Math.floor(Math.random() * (190 - 140 + 1) + 140)
+  //     return {...employee , height : randomHeight}
+  //   })
+  //   Promise.all ( 
+  //     updatedEmployees.map(employee => updateEmployee(employee._id, {height : employee.height})
+  //     ))
+  //     .then(() => {
+  //       setEmployees(updatedEmployees)
+  //     })
+  //     .catch(error => {
+  //       console.error("Error updating employees:", error )
+  //     })
+    
+  //   console.log(updatedEmployees)
+  // }
+  const updateEmployee = (id, height) => {
+    return fetch(`/api/employees/${id}`, {
+      method:"PUT",
+      headers: {"Content-type":"application/json"},
+      body: JSON.stringify(height)
+    })
+    .then((res) => res.json())
   }
 
   const handleRandomizedHeight = () => {
-    const updatedEmployees = employees.map(employee => {
-      const randomHeight = Math.floor(Math.random() * (190 - 140 + 1) + 140)
-      return {...employee , height : randomHeight}
+    const updatedEmployees = employees.map( employee => {
+      const randomizedHeight = Math.floor(Math.random() * (190 - 140 +1 ) + 140)
+      return {...employee, height:randomizedHeight }
     })
-    Promise.all ( 
-      updatedEmployees.map(employee => updateEmployee(employee._id, {height : employee.height})
+    // create a function to send the id and height to a function to 
+    Promise.all (
+      updatedEmployees.map( employee => 
+        updateEmployee(employee._id, {height : employee.height})
       ))
       .then(() => {
         setEmployees(updatedEmployees)
       })
       .catch(error => {
-        console.error("Error updating employees:", error )
+        console.error(error, "problem updating the employee")
       })
-    
-    console.log(updatedEmployees)
   }
 
 
