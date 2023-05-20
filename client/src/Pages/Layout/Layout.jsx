@@ -14,6 +14,11 @@ const Layout = () => (
             <button type="button">Create Employee</button>
           </Link>
         </li>
+        <li>
+          <Link to="employee/search">
+            <button type="button">Search for an Employee</button>
+          </Link>
+        </li>
       </ul>
     </nav>
     <Outlet />
