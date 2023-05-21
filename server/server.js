@@ -46,7 +46,10 @@ app.patch("/api/employees/:id", async (req, res, next) => {
     return next(err);
   }
 });
-
+app.get('/api/employees/error/:num', (req, res) => {
+    res.status(404).json({ error: 'Invalid parameter or resource not found' });
+  }
+);
 app.delete("/api/employees/:id", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findById(req.params.id);

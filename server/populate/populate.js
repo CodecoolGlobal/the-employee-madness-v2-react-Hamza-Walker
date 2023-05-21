@@ -24,6 +24,7 @@ const populateEmployees = async () => {
       name: pick(names),
       level: pick(levels),
       position: pick(positions),
+      yearsOfExperience: Math.floor(Math.random() * (15 - 0)),
     };
   });
 

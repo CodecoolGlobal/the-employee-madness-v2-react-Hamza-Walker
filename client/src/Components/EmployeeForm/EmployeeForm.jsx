@@ -1,10 +1,12 @@
 import { useState } from "react";
+import useParams from "react-router-dom";
 
 const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
   const [name, setName] = useState(employee?.name ?? "");
   const [level, setLevel] = useState(employee?.level ?? "");
   const [position, setPosition] = useState(employee?.position ?? "");
-
+  const [experience, setExperience] = useState(employee?.experience ?? "");
+  const experienceYears = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -54,6 +56,19 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
           name="position"
           id="position"
         />
+      </div>
+      <div className="control">
+        <label htmlFor="Experience">Experience:</label>
+        { level != "Junior" && (<select name="experience" defaultValue = {experience}>
+          {experienceYears.map((experience) => (
+            <option key={experience} value={"0"} onChange={ (e) => {
+              setExperience(e.target.value)
+              console.log(experience)
+            }}>
+              {experience}
+            </option>
+          ))}
+        </select>)}
       </div>
 
       <div className="buttons">
