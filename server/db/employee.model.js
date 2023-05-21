@@ -9,8 +9,8 @@ const EmployeeSchema = new Schema({
     required: true,
   },
   level: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "Level",
   },
   position: {
     type: String,

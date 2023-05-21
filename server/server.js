@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
+const LevelModel = require("./db/level.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -14,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate("level");
   return res.json(employees);
 });
 

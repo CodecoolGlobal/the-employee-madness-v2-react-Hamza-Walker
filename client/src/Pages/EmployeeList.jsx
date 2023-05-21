@@ -15,7 +15,7 @@ const deleteEmployee = (id) => {
 const EmployeeList = () => {
   const [loading, setLoading] = useState(true);
   const [employees, setEmployees] = useState(null);
-
+  // const [ sortOrder, setSortOrder ] = useState('asc')
   const handleDelete = (id) => {
     deleteEmployee(id);
 
@@ -23,6 +23,9 @@ const EmployeeList = () => {
       return employees.filter((employee) => employee._id !== id);
     });
   };
+
+ 
+  
 
   useEffect(() => {
     fetchEmployees()
@@ -36,7 +39,15 @@ const EmployeeList = () => {
     return <Loading />;
   }
 
-  return <EmployeeTable employees={employees} onDelete={handleDelete} />;
+  return (
+    <div>
+      
+        <EmployeeTable
+          employees={employees}
+          onDelete={handleDelete}
+        />
+    </div>
+  );
 };
 
 export default EmployeeList;
