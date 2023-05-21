@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
 const NoteModel = require("./db/notes.model");
-
 const { MONGO_URL, PORT = 8080 } = process.env;
 
 if (!MONGO_URL) {
@@ -15,12 +14,13 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate('notes');
+  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate("notes");
+  console.log(employees)
   return res.json(employees);
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id).populate('notes');
+  const employee = await EmployeeModel.findById(req.params.id).populate("notes");
   return res.json(employee);
 });
 
@@ -34,17 +34,22 @@ app.post("/api/employees/", async (req, res, next) => {
     return next(err);
   }
 });
+// Assuming you have the necessary imports and setup for Express and Mongoose
 
+// Define a route to handle the PATCH request for updating employee notes
 app.patch('/api/employees/:id/notes', async (req, res) => {
   try {
     const employeeId = req.params.id;
     const { title, content } = req.body.notes;
 
-    // Update the employee's notes in the database
+    // Create a new note using the Note model
+    const newNote = await NoteModel.create({ title, content });
+
     const updatedEmployee = await EmployeeModel.findByIdAndUpdate(
       employeeId,
-{ $set: { notes: { title, content } } },      { new: true }
-    );
+    { $push: { notes: newNote._id } }, 
+     { new: true }
+    ).populate('notes');
 
     res.json(updatedEmployee);
   } catch (error) {
@@ -52,6 +57,9 @@ app.patch('/api/employees/:id/notes', async (req, res) => {
     res.status(500).json({ error: 'Failed to update employee notes' });
   }
 });
+
+
+
 app.patch("/api/employees/:id", async (req, res, next) => {
   try {
     const employee = await EmployeeModel.findOneAndUpdate(
