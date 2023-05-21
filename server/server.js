@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
+const CompanyModel = require ('./db/company.model');
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -14,12 +15,17 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate('company');
   return res.json(employees);
 });
 
+app.get("/api/companies/", async (req, res) => {
+  const companies = await CompanyModel.find().sort({ created: "desc" });
+  return res.json(companies);
+});
+
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id);
+  const employee = await EmployeeModel.findById(req.params.id).populate('company');
   return res.json(employee);
 });
 
@@ -40,12 +46,13 @@ app.patch("/api/employees/:id", async (req, res, next) => {
       { _id: req.params.id },
       { $set: { ...req.body } },
       { new: true }
-    );
+    )
     return res.json(employee);
   } catch (err) {
     return next(err);
   }
 });
+
 
 app.delete("/api/employees/:id", async (req, res, next) => {
   try {
