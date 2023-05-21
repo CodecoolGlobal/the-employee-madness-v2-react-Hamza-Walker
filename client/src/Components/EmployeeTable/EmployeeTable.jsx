@@ -23,10 +23,13 @@ const EmployeeTable = ({ employees, onDelete }) => {
               <td>
               <Link to={`/update/${employee._id}`}>
                   <button type="button">Update</button>
-                </Link>
-                <button type="button" onClick={() => onDelete(employee._id)}>
-                  Delete
-                </button>
+              </Link>
+              <button type="button" onClick={() => onDelete(employee._id)}>
+                Delete
+              </button>
+              <Link to={`/employee/${employee._id}/notes/`}>
+                  <button type="button">Notes</button>
+              </Link>
               </td>
             </tr>
           ))}
