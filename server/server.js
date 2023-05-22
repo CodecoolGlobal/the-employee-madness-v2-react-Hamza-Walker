@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
-
+const WorkLogModel = require("./db/workLog.model");
 const { MONGO_URL, PORT = 8080 } = process.env;
 
 if (!MONGO_URL) {
@@ -14,12 +14,12 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().sort({ created: "desc" }).populate("workLog");
   return res.json(employees);
 });
 
 app.get("/api/employees/:id", async (req, res) => {
-  const employee = await EmployeeModel.findById(req.params.id);
+  const employee = await EmployeeModel.findById(req.params.id).populate("workLog");
   return res.json(employee);
 });
 
@@ -46,6 +46,20 @@ app.patch("/api/employees/:id", async (req, res, next) => {
     return next(err);
   }
 });
+
+app.patch("/api/employees/:id/worklog", async (req, res, next) => {
+    const { task, time } = req.body;
+    const workLog = await WorkLogModel.create({ task, time });
+    const employee = await EmployeeModel.findById(req.params.id).populate("workLog");
+    employee.workLog = [...employee.workLog, workLog];
+    await employee.save();
+    return res.json(employee);
+
+  
+  
+});
+
+
 
 app.delete("/api/employees/:id", async (req, res, next) => {
   try {
