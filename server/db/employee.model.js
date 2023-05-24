@@ -21,7 +21,7 @@ const EmployeeSchema = new Schema({
     default: Date.now,
   },
 });
-
+EmployeeSchema.index({ name: 'text' });
 module.exports = mongoose.model("Employee", EmployeeSchema);
 
 

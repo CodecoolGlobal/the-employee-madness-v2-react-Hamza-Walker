@@ -14,9 +14,25 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/employees/", async (req, res) => {
+
   const employees = await EmployeeModel.find().sort({ created: "desc" });
   return res.json(employees);
 });
+
+app.get("/api/employees/search/:userInput", async (req, res) => {
+  const userInput = req.params.userInput;
+  const employees = await EmployeeModel.find({ $text: { $search: userInput } });
+  return res.json(employees);
+});
+
+app.get(`/api/employees/:position/:level`, async (req, res) => {
+    const position = req.params.position;
+    const level = req.params.level;
+    const employees = await EmployeeModel.find({ position: position, level: level });
+    return res.json(employees);
+    
+});
+
 
 app.get("/api/employees/:id", async (req, res) => {
   const employee = await EmployeeModel.findById(req.params.id);
